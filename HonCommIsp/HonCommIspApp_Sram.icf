@@ -1,0 +1,57 @@
+/*###ICF### Section handled by ICF editor, don't touch! ****/
+/*-Editor annotation file-*/
+/* IcfEditorFile="$TOOLKIT_DIR$\config\ide\IcfEditor\cortex_v1_0.xml" */
+/*-Specials-*/
+define symbol __ICFEDIT_intvec_start__ = 0x00000000;
+/*-Memory Regions-*/
+define symbol __ICFEDIT_region_ROM_start__ = 0x00000000;
+define symbol __ICFEDIT_region_ROM_end__   = 0x000017FF;
+define symbol __ICFEDIT_region_RAM_start__ = 0x2000A000;
+define symbol __ICFEDIT_region_RAM_end__   = 0x2000DFFF;
+/*-Sizes-*/
+define symbol __ICFEDIT_size_cstack__ = 0x1000;
+define symbol __ICFEDIT_size_heap__   = 0x000;
+/**** End of ICF editor section. ###ICF###*/
+
+
+define memory mem with size = 4G;
+define region ROM_region   = mem:[from __ICFEDIT_region_ROM_start__   to __ICFEDIT_region_ROM_end__];
+define region RAM_region   = mem:[from __ICFEDIT_region_RAM_start__   to __ICFEDIT_region_RAM_end__];
+
+define block CSTACK    with alignment = 8, size = __ICFEDIT_size_cstack__   { };
+define block HEAP      with alignment = 8, size = __ICFEDIT_size_heap__     { };
+
+initialize by copy { readwrite };
+do not initialize  { section .noinit };
+
+place at address mem:__ICFEDIT_intvec_start__ { readonly section .intvec };
+
+place at address mem:__ICFEDIT_intvec_start__+0x100 { readonly section HonCommUartIspAppInfo };
+
+place in ROM_region   { readonly };
+place in RAM_region   { readwrite,
+                        block CSTACK, block HEAP };
+                        
+define region SubApp0ROM_region   = mem:[from __ICFEDIT_region_ROM_start__+0x10000   to __ICFEDIT_region_ROM_start__+0x117ff];
+define region SubApp1ROM_region   = mem:[from __ICFEDIT_region_ROM_start__+0x20000   to __ICFEDIT_region_ROM_start__+0x217ff];
+define region SubApp2ROM_region   = mem:[from __ICFEDIT_region_ROM_start__+0x30000   to __ICFEDIT_region_ROM_start__+0x317ff];
+define region SubApp3ROM_region   = mem:[from __ICFEDIT_region_ROM_start__+0x40000   to __ICFEDIT_region_ROM_start__+0x417ff];
+define region SubApp4ROM_region   = mem:[from __ICFEDIT_region_ROM_start__+0x50000   to __ICFEDIT_region_ROM_start__+0x517ff];
+define region SubApp5ROM_region   = mem:[from __ICFEDIT_region_ROM_start__+0x60000   to __ICFEDIT_region_ROM_start__+0x617ff];
+define region SubApp6ROM_region   = mem:[from __ICFEDIT_region_ROM_start__+0x70000   to __ICFEDIT_region_ROM_start__+0x717ff];
+define region SubApp7ROM_region   = mem:[from __ICFEDIT_region_ROM_start__+0x80000   to __ICFEDIT_region_ROM_start__+0x817ff];
+define region SubApp8ROM_region   = mem:[from __ICFEDIT_region_ROM_start__+0x90000   to __ICFEDIT_region_ROM_start__+0x917ff];
+define region SubApp9ROM_region   = mem:[from __ICFEDIT_region_ROM_start__+0xa0000   to __ICFEDIT_region_ROM_start__+0xa17ff];
+ 
+place in SubApp0ROM_region   {  object HonCommIspAppPage0.o};
+place in SubApp1ROM_region   {  object HonCommIspAppPage1.o};
+place in SubApp2ROM_region   {  object HonCommIspAppPage2.o};
+place in SubApp3ROM_region   {  object HonCommIspAppPage3.o};
+place in SubApp4ROM_region   {  object HonCommIspAppPage4.o};
+place in SubApp5ROM_region   {  object HonCommIspAppPage5.o};
+place in SubApp6ROM_region   {  object HonCommIspAppPage6.o};
+place in SubApp7ROM_region   {  object HonCommIspAppPage7.o};
+place in SubApp8ROM_region   {  object HonCommIspAppPage8.o};
+place in SubApp9ROM_region   {  object HonCommIspAppPage9.o};
+
+

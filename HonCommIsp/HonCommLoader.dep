@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<project>
+  <fileVersion>2</fileVersion>
+  <fileChecksum>1052539013</fileChecksum>
+  <configuration>
+    <name>Debug</name>
+    <outputs>
+      <file>$PROJ_DIR$\HonCommHalSample.c</file>
+      <file>$PROJ_DIR$\HonCommAppmain.c</file>
+      <file>$PROJ_DIR$\..\objout\HonCommLoader\Debug\Obj\HonCommLoadermain.pbi</file>
+      <file>$PROJ_DIR$\HonCommLoadermain.c</file>
+      <file>$PROJ_DIR$\..\objout\HonCommLoader\Debug\Obj\HonCommLoader.pbd</file>
+      <file>$PROJ_DIR$\..\objout\HonCommLoader\Debug\Obj\HonCommLoadermain.o</file>
+      <file>$PROJ_DIR$\..\objout\HonCommLoader\Debug\Obj\startup_SetSp.o</file>
+      <file>$PROJ_DIR$\HonSubs.h</file>
+      <file>$TOOLKIT_DIR$\inc\string.h</file>
+      <file>$TOOLKIT_DIR$\inc\ysizet.h</file>
+      <file>$TOOLKIT_DIR$\lib\rt6M_tl.a</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Product.h</file>
+      <file>$TOOLKIT_DIR$\lib\dl6M_tl_in.a</file>
+      <file>$PROJ_DIR$\..\objout\HonCommLoader\Debug\Exe\HonCommLoader.out</file>
+      <file>$TOOLKIT_DIR$\lib\shb_l.a</file>
+      <file>$PROJ_DIR$\startup_SetSp.s</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Threads.h</file>
+      <file>$PROJ_DIR$\HonCommLoader_Flash.icf</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Product_string.h</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Config_Normal.h</file>
+      <file>$TOOLKIT_DIR$\inc\xencoding_limits.h</file>
+      <file>$PROJ_DIR$\..\objout\HonCommLoader\Debug\List\HonCommLoader.map</file>
+      <file>$TOOLKIT_DIR$\inc\yvals.h</file>
+      <file>$PROJ_DIR$\..\objout\HonCommLoader\Debug\Exe\HonCommLoader.hex</file>
+      <file>$TOOLKIT_DIR$\inc\ycheck.h</file>
+      <file>$PROJ_DIR$\HonCommTypeDef_FuncDef.h</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Defaults.h</file>
+    </outputs>
+    <file>
+      <name>$PROJ_DIR$\HonCommLoadermain.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 5</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 2</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 25 7 8 24 22 26 19 11 20 16 9 18 0</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 25 7 8 24 22 26 11 20 16 9 18 0</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>[ROOT_NODE]</name>
+      <outputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 13 21</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\objout\HonCommLoader\Debug\Obj\HonCommLoader.pbd</name>
+      <inputs>
+        <tool>
+          <name>BILINK</name>
+          <file> 2</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\objout\HonCommLoader\Debug\Exe\HonCommLoader.out</name>
+      <outputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 21</file>
+        </tool>
+        <tool>
+          <name>OBJCOPY</name>
+          <file> 23</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 17 5 6 14 10 12</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\startup_SetSp.s</name>
+      <outputs>
+        <tool>
+          <name>AARM</name>
+          <file> 6</file>
+        </tool>
+      </outputs>
+    </file>
+  </configuration>
+</project>
+
+

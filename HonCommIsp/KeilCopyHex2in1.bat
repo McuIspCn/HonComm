@@ -1,0 +1,1 @@
+copy /y ..\objout\HonCommIspAppKeil\obj\HonIspAppKeil.hex+..\objout\HonCommLoaderKeil\obj\HonIspLoaderKeil.hex ..\objout\HonCommAppKeil.hex

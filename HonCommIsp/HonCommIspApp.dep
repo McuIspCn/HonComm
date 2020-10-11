@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<project>
+  <fileVersion>2</fileVersion>
+  <fileChecksum>2976383552</fileChecksum>
+  <configuration>
+    <name>Debug</name>
+    <outputs>
+      <file>$PROJ_DIR$\HonCommAppmain.c</file>
+      <file>$PROJ_DIR$\HonCommIspAppPage0.c</file>
+      <file>$PROJ_DIR$\startup_SetSp.s</file>
+      <file>$PROJ_DIR$\HonSubs.h</file>
+      <file>$PROJ_DIR$\..\objout\HonCommIspApp\Debug\Obj\startup_SetSp.o</file>
+      <file>$TOOLKIT_DIR$\lib\dl6M_tl_in.a</file>
+      <file>$TOOLKIT_DIR$\lib\rt6M_tl.a</file>
+      <file>$TOOLKIT_DIR$\lib\shb_l.a</file>
+      <file>$TOOLKIT_DIR$\inc\ysizet.h</file>
+      <file>$PROJ_DIR$\..\objout\HonCommIspApp\Debug\Obj\HonCommAppmain.pbi</file>
+      <file>$PROJ_DIR$\HonCommHalSample.c</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Product.h</file>
+      <file>$TOOLKIT_DIR$\inc\yvals.h</file>
+      <file>$PROJ_DIR$\..\objout\HonCommIspApp\Debug\Obj\HonCommAppmain.o</file>
+      <file>$PROJ_DIR$\..\objout\HonCommIspApp\Debug\Exe\HonCommIspApp.hex</file>
+      <file>$TOOLKIT_DIR$\inc\string.h</file>
+      <file>$PROJ_DIR$\..\objout\HonCommIspApp\Debug\List\HonCommAppmain.lst</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Product_string.h</file>
+      <file>$PROJ_DIR$\HonCommIspApp_Sram.icf</file>
+      <file>$PROJ_DIR$\..\objout\HonCommIspApp\Debug\Obj\HonCommIspAppPage0.o</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Threads.h</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Config_Normal.h</file>
+      <file>$PROJ_DIR$\..\objout\HonCommIspApp\Debug\Obj\HonCommIspAppPage0.pbi</file>
+      <file>$PROJ_DIR$\..\objout\HonCommIspApp\Debug\List\HonCommIspApp.map</file>
+      <file>$TOOLKIT_DIR$\inc\ycheck.h</file>
+      <file>$PROJ_DIR$\..\objout\HonCommIspApp\Debug\List\HonCommIspAppPage0.lst</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Defaults.h</file>
+      <file>$PROJ_DIR$\HonCommTypeDef_FuncDef.h</file>
+      <file>$PROJ_DIR$\..\objout\HonCommIspApp\Debug\Obj\HonCommIspApp.pbd</file>
+      <file>$TOOLKIT_DIR$\inc\xencoding_limits.h</file>
+      <file>$PROJ_DIR$\..\objout\HonCommIspApp\Debug\Exe\HonCommIspApp.out</file>
+    </outputs>
+    <file>
+      <name>$PROJ_DIR$\HonCommAppmain.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 16 13</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 9</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 27 3 10 15 24 12 26 21 11 29 20 8 17</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 27 3 10 15 24 12 26 11 29 20 8 17</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\HonCommIspAppPage0.c</name>
+      <outputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 25 19</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 22</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCARM</name>
+          <file> 27 3 10</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 27 3 10</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\startup_SetSp.s</name>
+      <outputs>
+        <tool>
+          <name>AARM</name>
+          <file> 4</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>[ROOT_NODE]</name>
+      <outputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 30 23</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\objout\HonCommIspApp\Debug\Obj\HonCommIspApp.pbd</name>
+      <inputs>
+        <tool>
+          <name>BILINK</name>
+          <file> 9 22</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\objout\HonCommIspApp\Debug\Exe\HonCommIspApp.out</name>
+      <outputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 23</file>
+        </tool>
+        <tool>
+          <name>OBJCOPY</name>
+          <file> 14</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ILINK</name>
+          <file> 18 13 19 4 7 6 5</file>
+        </tool>
+      </inputs>
+    </file>
+  </configuration>
+</project>
+
+

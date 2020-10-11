@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<workspace>
+  <project>
+    <path>$WS_DIR$\HonCommLoader.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\HonCommIspApp.ewp</path>
+  </project>
+  <batchBuild>
+    <batchDefinition>
+      <name>AllBuild</name>
+      <member>
+        <project>HonCommIspApp</project>
+        <configuration>Debug</configuration>
+      </member>
+      <member>
+        <project>HonCommLoader</project>
+        <configuration>Debug</configuration>
+      </member>
+      <member>
+        <project>HonCommLoader</project>
+        <configuration>HonIspLoader</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+</workspace>
+
+
