@@ -145,6 +145,8 @@ typedef union{
 #define HonFile_CmpSegmentData ((s32 (*)(u32 address,u8 *buf,u32 len))DefHonFileBasicFunctions(3))
 #define HonFile_ReadSegmentExtraData ((s32 (*)(u32 address,u8 *buf,u32 len))DefHonFileBasicFunctions(4))
 #define HonFile_WriteSegmentExtraData ((s32 (*)(u32 address,u8 *buf,u32 len))DefHonFileBasicFunctions(5))
+#define HonFile_InitRepFile ((s32 (*)(u32 filelen,u8 *DOSfilename8_3_11B))DefHonFileBasicFunctions(8))
+#define HonFile_WriteRepFile512B ((s32 (*)(u32 blockadd,u8 *buf512B))DefHonFileBasicFunctions(9))
 
 #define HonFile_GetCrc32_4c11db7 ((u32 (*)(u32 *dwbuf,u32 dwlen,u32 precrc))DefHonFileBasicFunctions(16))
 #define HonFile_GetCrc16_1021 ((s32 (*)(u8 *buf,u32 len,u32 precrc))DefHonFileBasicFunctions(17))

@@ -6,54 +6,62 @@
   <configuration>
     <name>Debug</name>
     <outputs>
-      <file>$PROJ_DIR$\HonCommHalSample.c</file>
-      <file>$PROJ_DIR$\HonCommAppmain.c</file>
-      <file>$PROJ_DIR$\..\objout\HonCommLoader\Debug\Obj\HonCommLoadermain.pbi</file>
-      <file>$PROJ_DIR$\HonCommLoadermain.c</file>
       <file>$PROJ_DIR$\..\objout\HonCommLoader\Debug\Obj\HonCommLoader.pbd</file>
-      <file>$PROJ_DIR$\..\objout\HonCommLoader\Debug\Obj\HonCommLoadermain.o</file>
-      <file>$PROJ_DIR$\..\objout\HonCommLoader\Debug\Obj\startup_SetSp.o</file>
-      <file>$PROJ_DIR$\HonSubs.h</file>
-      <file>$TOOLKIT_DIR$\inc\string.h</file>
-      <file>$TOOLKIT_DIR$\inc\ysizet.h</file>
-      <file>$TOOLKIT_DIR$\lib\rt6M_tl.a</file>
-      <file>$TOOLKIT_DIR$\inc\DLib_Product.h</file>
-      <file>$TOOLKIT_DIR$\lib\dl6M_tl_in.a</file>
-      <file>$PROJ_DIR$\..\objout\HonCommLoader\Debug\Exe\HonCommLoader.out</file>
-      <file>$TOOLKIT_DIR$\lib\shb_l.a</file>
-      <file>$PROJ_DIR$\startup_SetSp.s</file>
+      <file>$PROJ_DIR$\HonCommLoadermain.c</file>
       <file>$TOOLKIT_DIR$\inc\DLib_Threads.h</file>
-      <file>$PROJ_DIR$\HonCommLoader_Flash.icf</file>
+      <file>$TOOLKIT_DIR$\lib\dl6M_tl_in.a</file>
+      <file>$PROJ_DIR$\HonSubs.h</file>
       <file>$TOOLKIT_DIR$\inc\DLib_Product_string.h</file>
-      <file>$TOOLKIT_DIR$\inc\DLib_Config_Normal.h</file>
-      <file>$TOOLKIT_DIR$\inc\xencoding_limits.h</file>
-      <file>$PROJ_DIR$\..\objout\HonCommLoader\Debug\List\HonCommLoader.map</file>
-      <file>$TOOLKIT_DIR$\inc\yvals.h</file>
-      <file>$PROJ_DIR$\..\objout\HonCommLoader\Debug\Exe\HonCommLoader.hex</file>
-      <file>$TOOLKIT_DIR$\inc\ycheck.h</file>
+      <file>$TOOLKIT_DIR$\lib\rt6M_tl.a</file>
+      <file>$PROJ_DIR$\..\objout\HonCommLoader\Debug\Exe\HonCommLoader.out</file>
+      <file>$TOOLKIT_DIR$\inc\string.h</file>
+      <file>$PROJ_DIR$\..\objout\HonCommLoader\Debug\Obj\HonCommLoadermain.o</file>
       <file>$PROJ_DIR$\HonCommTypeDef_FuncDef.h</file>
+      <file>$TOOLKIT_DIR$\inc\yvals.h</file>
+      <file>$TOOLKIT_DIR$\inc\ysizet.h</file>
+      <file>$PROJ_DIR$\startup_SetSp.s</file>
+      <file>$PROJ_DIR$\HonCommHalSample.c</file>
+      <file>$TOOLKIT_DIR$\inc\xencoding_limits.h</file>
       <file>$TOOLKIT_DIR$\inc\DLib_Defaults.h</file>
+      <file>$PROJ_DIR$\HonCommLoader_Flash.icf</file>
+      <file>$PROJ_DIR$\..\objout\HonCommLoader\Debug\Exe\HonCommLoader.hex</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Product.h</file>
+      <file>$TOOLKIT_DIR$\inc\ycheck.h</file>
+      <file>$PROJ_DIR$\..\objout\HonCommLoader\Debug\List\HonCommLoader.map</file>
+      <file>$PROJ_DIR$\..\objout\HonCommLoader\Debug\Obj\HonCommLoadermain.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\DLib_Config_Normal.h</file>
+      <file>$PROJ_DIR$\..\objout\HonCommLoader\Debug\Obj\startup_SetSp.o</file>
+      <file>$TOOLKIT_DIR$\lib\shb_l.a</file>
     </outputs>
+    <file>
+      <name>$PROJ_DIR$\..\objout\HonCommLoader\Debug\Obj\HonCommLoader.pbd</name>
+      <inputs>
+        <tool>
+          <name>BILINK</name>
+          <file> 22</file>
+        </tool>
+      </inputs>
+    </file>
     <file>
       <name>$PROJ_DIR$\HonCommLoadermain.c</name>
       <outputs>
         <tool>
           <name>ICCARM</name>
-          <file> 5</file>
+          <file> 9</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 2</file>
+          <file> 22</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>ICCARM</name>
-          <file> 25 7 8 24 22 26 19 11 20 16 9 18 0</file>
+          <file> 10 4 8 20 11 16 23 19 15 2 12 5 14</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 25 7 8 24 22 26 11 20 16 9 18 0</file>
+          <file> 10 4 8 20 11 16 19 15 2 12 5 14</file>
         </tool>
       </inputs>
     </file>
@@ -62,18 +70,9 @@
       <outputs>
         <tool>
           <name>ILINK</name>
-          <file> 13 21</file>
+          <file> 7 21</file>
         </tool>
       </outputs>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\objout\HonCommLoader\Debug\Obj\HonCommLoader.pbd</name>
-      <inputs>
-        <tool>
-          <name>BILINK</name>
-          <file> 2</file>
-        </tool>
-      </inputs>
     </file>
     <file>
       <name>$PROJ_DIR$\..\objout\HonCommLoader\Debug\Exe\HonCommLoader.out</name>
@@ -84,13 +83,13 @@
         </tool>
         <tool>
           <name>OBJCOPY</name>
-          <file> 23</file>
+          <file> 18</file>
         </tool>
       </outputs>
       <inputs>
         <tool>
           <name>ILINK</name>
-          <file> 17 5 6 14 10 12</file>
+          <file> 17 9 24 25 6 3</file>
         </tool>
       </inputs>
     </file>
@@ -99,7 +98,7 @@
       <outputs>
         <tool>
           <name>AARM</name>
-          <file> 6</file>
+          <file> 24</file>
         </tool>
       </outputs>
     </file>

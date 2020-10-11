@@ -87,12 +87,108 @@ int stm32ftestACmd(void)
   return 0;
 }
 #include <string.h>
+int stm32f103ReadChip(void)
+{
+  union{
+    unsigned char byte_buf512[512];
+    unsigned short u16_buf256[256];
+    unsigned long u32_buf128[128];
+  }tb;
+  char str[32];
+  HonUi_ClrRect(0,0,128);
+  Hon_SetLeds(0x0000,80);
+  s32 bps=HonComm_GetSetBPS(0);
+  bps=230400;
+  HonComm_GetSetComSettings(SetChFMT_DataBit8+SetChFMT_ONESTOPBIT+SetChFMT_EVENPARITY);
+  HonComm_GetSetBPS(bps);
+  ResetChip_DtrHighRst_RtsHighIsp(100);
+  HonUi_DisplayStr("开始连接芯片... bps:",0,0,0);
+  DisplayInt32A(bps,48,16,0);
+  HonUi_DisplayStr("\r\n",0,32,0);
+  if(STM32AN3155_ConnectChip(5000)<0)return -1;
+  HonUi_Beep(100,6);
+  HonUi_ClrRect(0,0,128);
+  
+  HonUi_DisplayStr("STM32AN3155_ConnectChip Ok\r\n",0,0,0);
+  u32 StartTime;
+  StartTime=HonComm_GetMsTicks();
+  if(0)
+  {
+    HonUi_DisplayStr("stm32ftestACmd\r\n",0,32,0);
+    if(stm32ftestACmd()<0)return -5;
+  }
+  if(STM32AN3155_Get(tb.byte_buf512)<0)return -2;
+  unsigned char EraseCmd=tb.byte_buf512[8];//43 or 44
+  if(STM32AN3155_GetVersion_RdpStatus(tb.byte_buf512)<0)return -3;
+  if(STM32AN3155_GetChipProductID(tb.byte_buf512)<0)return -4;
+  unsigned long address=0x08000000,size=8;
+  signed long result;
+  result=STM32AN3155_ReadMemory(address,tb.byte_buf512,size);
+  if(result<0)
+  {
+    if(result!=-1)return -5;
+    //STM32AN3155_ReadMemory==-1,NACKed,Erase Chip
+    HonUi_ClrRect(0,0,128);
+    HonUi_DisplayStr("芯片已设置读保护，无法读出\r\n",0,64+32,0);
+    return -1;
+  }
+  result=STM32AN3155_ReadMemory(0x1ffff7e0,tb.byte_buf512,8);
+  if(result<0)
+  {
+    HonUi_ClrRect(0,0,128);
+    HonUi_DisplayStr("读芯片Flash大小失败\r\n",0,64+32,0);
+    return -1;
+  }
+  u32 chipsize;
+  chipsize=tb.u16_buf256[0];
+  chipsize=chipsize*1024;
+  HonUi_ClrRect(0,64+32,32);
+  HonUi_DisplayStr("芯片大小(Bytes):",0,64+32,0);
+  DisplayInt32A(chipsize,0,64+48,0);
+  HonUi_DisplayStr(" 0x:",0,512,0);
+  DisplayHex32A(chipsize,64,64+48,0);
+  HonUi_DisplayStr("\r\n",0,512,0);
+  
+  HonFile_InitRepFile(chipsize,"STM32MEMBIN");//文件名必须是DOS8.3格式
+  HonUi_DisplayStr("Start Read Chip:\r\n",0,512,0);
+  HonUi_DisplayProgress(0,chipsize,48);
+  for(u32 index=0;index<chipsize;index+=512)
+  {
+    for(u32 ridx=0;ridx<512;ridx+=128)
+    {
+      result=STM32AN3155_ReadMemory(0x08000000+index+ridx,tb.byte_buf512+ridx,128);
+      if(result<0)break;
+    }
+    if(result<0)break;
+    result=HonFile_WriteRepFile512B(index/512,tb.byte_buf512);
+    if(result<0)break;
+    if((index%1024)==0)
+    {
+      HonUi_DelStr();
+      IntToStr(index/1024,(u8*)str);
+      strcat(str,"KB Readed!!!\r\n");
+      HonUi_DisplayStr(str,0,16,0);
+      HonUi_DisplayProgress(index,chipsize,48);
+    }
+  }
+  HonUi_DisplayProgress(chipsize,chipsize,48);
+  if(result>=0)
+  {
+    HonUi_ClrRect(0,0,32);
+    HonUi_DisplayStr("芯片读取完毕\r\n",0,0,0);
+    StartTime=HonComm_GetMsTicks()-StartTime;
+    IntToStr(StartTime,(u8*)str);
+    strcat(str,"ms,All Ok\r\n");
+    HonUi_DisplayStr(str,0,64,0);
+  }
+  return 0;
+}
 int stm32f103xxxxIsp(u32 progcount)
 {
   union{
-    unsigned char byte_buf256[256];
-    unsigned short u16_buf128[128];
-    unsigned long u32_buf64[64];
+    unsigned char byte_buf512[512];
+    unsigned short u16_buf256[256];
+    unsigned long u32_buf128[128];
   }tb;
   u64 SN=0;
   if(LoadSerialNo(&SN)<0)return -1001;
@@ -126,10 +222,10 @@ int stm32f103xxxxIsp(u32 progcount)
     HonUi_DisplayStr("stm32ftestACmd\r\n",0,32,0);
     if(stm32ftestACmd()<0)return -5;
   }
-  if(STM32AN3155_Get(tb.byte_buf256)<0)return -2;
-  unsigned char EraseCmd=tb.byte_buf256[8];//43 or 44
-  if(STM32AN3155_GetVersion_RdpStatus(tb.byte_buf256)<0)return -3;
-  if(STM32AN3155_GetChipProductID(tb.byte_buf256)<0)return -4;
+  if(STM32AN3155_Get(tb.byte_buf512)<0)return -2;
+  unsigned char EraseCmd=tb.byte_buf512[8];//43 or 44
+  if(STM32AN3155_GetVersion_RdpStatus(tb.byte_buf512)<0)return -3;
+  if(STM32AN3155_GetChipProductID(tb.byte_buf512)<0)return -4;
   unsigned long address=0x08000000,size=8;
   signed long result;
   
@@ -138,8 +234,8 @@ int stm32f103xxxxIsp(u32 progcount)
     u32 Second=100;
     u32 pagecount=0xffff;
     STM32AN3155_ReadOutUnProtect(Second<<20);
-    STM32AN3155_Erase43( (Second<<20)+pagecount,tb.byte_buf256);
-    STM32AN3155_Erase44( (Second<<20)+pagecount,tb.u16_buf128);
+    STM32AN3155_Erase43( (Second<<20)+pagecount,tb.byte_buf512);
+    STM32AN3155_Erase44( (Second<<20)+pagecount,tb.u16_buf256);
   }
   if(0)
   {
@@ -150,7 +246,7 @@ int stm32f103xxxxIsp(u32 progcount)
   }
   else
   {
-    result=STM32AN3155_ReadMemory(address,tb.byte_buf256,size);
+    result=STM32AN3155_ReadMemory(address,tb.byte_buf512,size);
     if(result<0)
     {
       if(result!=-1)return -5;
@@ -164,12 +260,12 @@ int stm32f103xxxxIsp(u32 progcount)
       if(EraseCmd==0x43)
       {
         HonUi_DisplayStr("Full Erase Chip43\r\n",0,64+32,0);
-        if(STM32AN3155_Erase43(0xffff,tb.byte_buf256)<0)return -11;
+        if(STM32AN3155_Erase43(0xffff,tb.byte_buf512)<0)return -11;
       }
       else if(EraseCmd==0x44)
       {
         HonUi_DisplayStr("Full Erase Chip44\r\n",0,64+32,0);
-        if(STM32AN3155_Erase44(0xffff,tb.u16_buf128)<0)return -12;
+        if(STM32AN3155_Erase44(0xffff,tb.u16_buf256)<0)return -12;
       }
       else
       {
@@ -182,7 +278,7 @@ int stm32f103xxxxIsp(u32 progcount)
   }
   HonUi_ClrRect(0,0,128);
   HonUi_DisplayStr("Erase Chip Ok\r\n",0,0,0);
-  result=STM32AN3155_ReadMemory(0x1ffff7e8,tb.byte_buf256,12);
+  result=STM32AN3155_ReadMemory(0x1ffff7e8,tb.byte_buf512,12);
   if(result<0)
   {
     HonUi_DisplayStr1S("读芯片唯一序列号失败 Read ChipUID Fail...\r\n",0,32,0);
@@ -191,11 +287,11 @@ int stm32f103xxxxIsp(u32 progcount)
   if(1)
   {
     HonUi_DisplayStr("芯片唯一序列号 ChipUID...\r\n",0,32,0);
-    DisplayMemoryA(tb.byte_buf256,0,64,12);
+    DisplayMemoryA(tb.byte_buf512,0,64,12);
     HonUi_DisplayStr("\r\n",0,64+32,2);
   }
   HonUi_ClrRect(0,0,128);
-  result=HonFile_SwitchSegment(0,tb.byte_buf256,sizeof(TSegmentInfomation));
+  result=HonFile_SwitchSegment(0,tb.byte_buf512,sizeof(TSegmentInfomation));
   //buf里返回16字节segment name,unsigned long startaddress,unsigned long datasize,
   if(1)
   {//显示自动增量信息
@@ -207,7 +303,7 @@ int stm32f103xxxxIsp(u32 progcount)
   HonUi_DisplayStr("Write Flash..\r\n",0,0,0);
   if(result>=0)
   {
-    TSegmentInfomation *seginfo=(TSegmentInfomation*)tb.byte_buf256;
+    TSegmentInfomation *seginfo=(TSegmentInfomation*)tb.byte_buf512;
     unsigned long startaddress=(*seginfo).startaddress;
     unsigned long datasize=(*seginfo).loadedsize;
     unsigned long steplen;
@@ -216,13 +312,13 @@ int stm32f103xxxxIsp(u32 progcount)
     {
       steplen=datasize-i;
       if(steplen>256)steplen=256;
-      if(HonFile_ReadSegmentData(startaddress+i,tb.byte_buf256,steplen)<0)
+      if(HonFile_ReadSegmentData(startaddress+i,tb.byte_buf512,steplen)<0)
       {
         HonUi_DisplayStr1S("ReadSegmentData Error\r\n",0,64,0);
         return -61;
       }
-      WriteDataMask(&snmask8,startaddress+i,tb.byte_buf256,steplen);
-      if(STM32AN3155_WriteMemory(startaddress+i,tb.byte_buf256,steplen)<0)
+      WriteDataMask(&snmask8,startaddress+i,tb.byte_buf512,steplen);
+      if(STM32AN3155_WriteMemory(startaddress+i,tb.byte_buf512,steplen)<0)
       {
         HonUi_DisplayStr1S("Write Flash Error\r\n",0,0,0);
         return -62;
@@ -245,9 +341,9 @@ int stm32f103xxxxIsp(u32 progcount)
     {
       steplen=datasize-i;
       if(steplen>256)steplen=256;
-      if(STM32AN3155_ReadMemory(startaddress+i,tb.byte_buf256,steplen)<0)return -63;
-      if(VerifyDataMask(&snmask8,startaddress+i,tb.byte_buf256,steplen)<0)return -65;
-      if(HonFile_CmpSegmentData(startaddress+i,tb.byte_buf256,steplen)<0)return -64;
+      if(STM32AN3155_ReadMemory(startaddress+i,tb.byte_buf512,steplen)<0)return -63;
+      if(VerifyDataMask(&snmask8,startaddress+i,tb.byte_buf512,steplen)<0)return -65;
+      if(HonFile_CmpSegmentData(startaddress+i,tb.byte_buf512,steplen)<0)return -64;
       if((i%1024)==0)
       {
         HonUi_DelStr();
@@ -269,12 +365,12 @@ int stm32f103xxxxIsp(u32 progcount)
   if(1)
   {
     //专门校验一次自动增量
-    memset(tb.byte_buf256,0,32);
-    if(STM32AN3155_ReadMemory(snmask8.address,tb.byte_buf256,snmask8.datalen)<0)return -8300;
+    memset(tb.byte_buf512,0,32);
+    if(STM32AN3155_ReadMemory(snmask8.address,tb.byte_buf512,snmask8.datalen)<0)return -8300;
     HonUi_ClrRect(0,0,128);
     DisplayMemoryA(snmask8.data,0,0,8);
-    DisplayMemoryA(tb.byte_buf256,0,32,8);
-    if(memcmp(snmask8.data,tb.byte_buf256,snmask8.datalen)==0)
+    DisplayMemoryA(tb.byte_buf512,0,32,8);
+    if(memcmp(snmask8.data,tb.byte_buf512,snmask8.datalen)==0)
     {
       HonUi_DisplayStr("\r\n自动增量正确\r\n",0,64,0);
       HonUi_GetKey(1000);
@@ -285,11 +381,11 @@ int stm32f103xxxxIsp(u32 progcount)
       HonUi_GetKey(0);
     }
   }
-  result=HonFile_SwitchSegment(1,tb.byte_buf256,sizeof(TSegmentInfomation));
+  result=HonFile_SwitchSegment(1,tb.byte_buf512,sizeof(TSegmentInfomation));
   //buf里返回16字节segment name,unsigned long startaddress,unsigned long datasize,
   if(result>=0)
   {
-    TSegmentInfomation *seginfo=(TSegmentInfomation*)tb.byte_buf256;
+    TSegmentInfomation *seginfo=(TSegmentInfomation*)tb.byte_buf512;
     unsigned long startaddress=(*seginfo).startaddress;
     unsigned long datasize=(*seginfo).loadedsize;
     unsigned long steplen;
@@ -297,8 +393,8 @@ int stm32f103xxxxIsp(u32 progcount)
     {
       steplen=datasize-i;
       if(steplen>16)steplen=16;
-      if(HonFile_ReadSegmentData(startaddress+i,tb.byte_buf256,steplen)<0)return -67;
-      if(STM32AN3155_WriteMemory(startaddress+i,tb.byte_buf256,steplen)<0)return -68;
+      if(HonFile_ReadSegmentData(startaddress+i,tb.byte_buf512,steplen)<0)return -67;
+      if(STM32AN3155_WriteMemory(startaddress+i,tb.byte_buf512,steplen)<0)return -68;
     }
     HonUi_DisplayStr("Write OptionBytes Ok...\r\n",0,0,0);
     if(0)//optionbytes cannot readout after RDP
@@ -307,8 +403,8 @@ int stm32f103xxxxIsp(u32 progcount)
       {
         steplen=datasize-i;
         if(steplen>16)steplen=16;
-        if(STM32AN3155_ReadMemory(startaddress+i,tb.byte_buf256,steplen)<0)return -69;
-        if(HonFile_CmpSegmentData(startaddress+i,tb.byte_buf256,steplen)<0)return -70;
+        if(STM32AN3155_ReadMemory(startaddress+i,tb.byte_buf512,steplen)<0)return -69;
+        if(HonFile_CmpSegmentData(startaddress+i,tb.byte_buf512,steplen)<0)return -70;
       }
       HonUi_DisplayStr("Verify OptionBytes Ok\r\n",0,0,0);
     }
@@ -360,7 +456,7 @@ int main()
   HonUi_DisplayStrLenXY("STM32串口下载演示-KeilMDK\r\n",0);
 #endif
   HonUi_DisplayStr("开始串口下载\r\n",0,32,0);
-  HonUi_DisplayStr("请按1键开始一次烧录，按0开始循环烧录\r\n",0,64,0);
+  HonUi_DisplayStr("请按1键开始一次烧录，按0开始循环烧录，按2开始读取芯片\r\n",0,64,0);
   s32 progcount=HonUi_GetKey(0);
   Hon_OpenUartPort();
   Hon_SetPin_Low(J_6P5_Boot0);
@@ -373,6 +469,11 @@ int main()
   Hon_SetLeds(0x5555,50);
   Hon_ATE_IO(0x5);
   //返回即结束下载
+  if(progcount==2)
+  {
+    x=stm32f103ReadChip();
+    return 0;
+  }
   while(1)
   {
     x=stm32f103xxxxIsp(progcount);
