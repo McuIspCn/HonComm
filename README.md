@@ -1,7 +1,8 @@
 # HonComm
 
 #### 介绍
-鸿盟 单片机 串口下载软件
+鸿盟 单片机 串口下载软件，使用C语言，可用IAR EWARM或Keil MDK编译
+目前支持STM32F1
 
 #### 软件架构
 使用C语言，可用IAR EWARM或Keil MDK编译
